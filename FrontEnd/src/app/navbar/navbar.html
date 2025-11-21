@@ -1,10 +1,15 @@
-<h2>Navbar</h2>
-<div>
-    <nav>
-        <a routerLink="/home" routerLinkActive="active">home</a>
-        <a routerLink="/program/ticket" routerLinkActive="active">Program&tickets</a>
-        <a routerLink="/allmovies" routerLinkActive="active">All Movies</a>
-        <a routerLink="/contact" routerLinkActive="active">Contact</a>
-        <a routerLink="/about" routerLinkActive="active">About</a>
-    </nav>
-</div>
+<header class="topbar">
+  <div class="topbar-left"></div>
+
+  <div class="logo" routerLink="/">WebBio</div>
+
+  <div class="right-text">Vises nu</div>
+</header>
+
+<nav class="main-nav">
+  <a routerLink="/home" routerLinkActive="active">Home</a>
+  <a routerLink="/tickets" routerLinkActive="active">Program&tickets</a>
+  <a routerLink="/all-movies" routerLinkActive="active">All Movies</a>
+  <a routerLink="/contact" routerLinkActive="active">Contact</a>
+  <a routerLink="/about" routerLinkActive="active">About</a>
+</nav>

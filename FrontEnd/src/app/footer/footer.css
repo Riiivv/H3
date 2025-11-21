@@ -1,0 +1,45 @@
+.footer {
+  background: #120a22; /* mørk lilla */
+  color: #ccc;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-section {
+  min-width: 150px;
+}
+
+.footer a {
+  display: block;
+  margin-bottom: 8px;
+  color: #bbbbff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #fff;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+app-root {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+app-footer {
+  margin-top: auto;
+}
+
+.footer {
+  background: #0f0a1a;
+  padding: 30px 20px;
+  text-align: center;
+  color: #bbb;
+}

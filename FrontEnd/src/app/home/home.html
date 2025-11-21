@@ -1,1 +1,25 @@
-<h1>WebBio</h1>
+<div class="search-box">
+  <span class="search-icon">🔍</span>
+  <input type="text" placeholder="search for movie...">
+</div>
+
+<div class="date-row">
+    <div class="date-card" *ngFor="let d of dates">
+        <span>{{ d.dayName}}</span>
+        <span>{{ d.date}}</span>
+</div>
+</div>
+
+<div class="genre-row">
+    <button *ngFor="let g of genres"
+          [class.active]="g === activeGenre">
+    {{ g }}
+    </button>
+</div>
+
+<div class="film-grid">
+  <div class="film-card" *ngFor="let film of films">
+    <img [src]="film.image">
+    <div class="rating">{{ film.rating }}</div>
+  </div>
+</div>
