@@ -28,8 +28,9 @@ font-size: 0.95rem;
 .date-row{
     display: flex;
     overflow: auto;
-    gap: 10px;
+    gap: 180px;
     padding: 10px;
+    font-size: 2rem;
 }
 
 .genre-row{
