@@ -1,31 +1,55 @@
-.search-box{
-    margin: 0% 750px;
+/* ----------------------------------------
+   GLOBAL
+---------------------------------------- */
+
+body {
+    background: #000000;
+    color: #ffffff;
+    margin: 0;
+    font-family: system-ui, sans-serif;
+}
+
+
+/* ----------------------------------------
+   SEARCH BOX
+---------------------------------------- */
+
+.search-box {
+    margin: 30px auto 20px;        /* centrerer den */
     max-width: 600px;
     padding: 12px 16px;
     border-radius: 999px;
     background: #1a1028;
     display: flex;
     align-items: center;
-    gap: 1px;
+    gap: 8px;
     box-shadow: 0 0 0 1px #3a2730;
 }
-.search-box input{
-background: transparent;
-border: none;
-outline: none;
-color: #f5f5f5;
-width: 100%;
-font-size: 0.95rem;
-}
-.search-box input::placeholder{
-    color: #7c6b9b;
 
+.search-box input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #f5f5f5;
+    width: 100%;
+    font-size: 0.95rem;
 }
-.search-icon{
+
+.search-box input::placeholder {
+    color: #7c6b9b;
+}
+
+.search-icon {
     font-size: 1.1rem;
     opacity: 0.7;
 }
-.date-row{
+
+
+/* ----------------------------------------
+   DATE ROW
+---------------------------------------- */
+
+.date-row {
     display: flex;
     overflow: auto;
     gap: 180px;
@@ -33,22 +57,93 @@ font-size: 0.95rem;
     font-size: 2rem;
 }
 
-.genre-row{
-    border-radius: 20px;
-    padding: 6px 14px;
+.date-row::-webkit-scrollbar {
+    display: none;
 }
-.genre-row button.active{
-    background: #a040ff;
+
+
+/* ----------------------------------------
+   DROPDOWN GENRE MENU (NY VERSION)
+---------------------------------------- */
+
+.genre-dropdown {
+    position: relative;
+    display: inline-block;
+    margin: 20px 0;
 }
+
+/* knap der åbner menuen */
+.dropdown-trigger {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid #3e2a5a;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    min-width: 160px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* selve menuen */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    background: #1a1028;
+    padding: 6px 0;
+    border-radius: 6px;
+    min-width: 180px;
+    max-height: 240px;
+    overflow-y: auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    z-index: 50;
+    scrollbar-width: thin;
+    scrollbar-color: #4a3a6d transparent;
+}
+
+/* scrollbar til Chrome */
+.dropdown-menu::-webkit-scrollbar {
+    width: 6px;
+}
+.dropdown-menu::-webkit-scrollbar-thumb {
+    background: #4a3a6d;
+    border-radius: 10px;
+}
+.dropdown-menu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* genre items */
+.dropdown-item {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #e8e0ff;
+    text-align: left;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.dropdown-item:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.dropdown-item.active {
+    background: #8c38ff;
+    color: #fff;
+}
+
+
+/* ----------------------------------------
+   FILM GRID
+---------------------------------------- */
 
 .film-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-}
-
-
-body
-{
-    background: #000000;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
 }
