@@ -1,1 +1,20 @@
-<p>film-administration works!</p>
+<ul>
+  <li *ngFor="let film of FilmList">
+    {{ film.FilmId }} – {{ film.Title }} ({{ film.Genre }}, {{ film.ReleaseYear }})
+  </li>
+</ul>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Titel</th>
+    <th>År</th>
+    <th>Genre</th>
+  </tr>
+  <tr *ngFor="let film of FilmList">
+    <td>{{ film.FilmId }}</td>
+    <td>{{ film.Title }}</td>
+    <td>{{ film.ReleaseYear }}</td>
+    <td>{{ film.Genre }}</td>
+  </tr>
+</table>

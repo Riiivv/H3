@@ -6,7 +6,7 @@ import { Film } from '../interfaces/film';
 
 @Component({
   selector: 'app-film-administration',
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule , NgFor],
   templateUrl: './film-administration.html',
   styleUrl: './film-administration.css',
 })
@@ -33,5 +33,6 @@ export class FilmAdministation implements OnInit {
       const newFilm = this.filmsForm.value as Film
       this.filmService.postFilm(newFilm);
   }
-  }
+}
+
 }

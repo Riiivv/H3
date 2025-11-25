@@ -23,3 +23,11 @@
     <div class="rating">{{ film.rating }}</div>
   </div>
 </div>
+
+<div class="film-grid">
+  <div class="film-card" *ngFor="let film of filteredFilms">
+    <!-- midlertidigt tekst, indtil du har billeder -->
+    <h3>{{ film.Title }}</h3>
+    <p>{{ film.Genre }} • {{ film.ReleaseYear }}</p>
+  </div>
+</div>

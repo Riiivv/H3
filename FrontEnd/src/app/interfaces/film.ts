@@ -3,4 +3,5 @@ export interface Film {
     Title:string;
     ReleaseYear:number;
     Genre:string;
+    imageUrl:string;
 }
