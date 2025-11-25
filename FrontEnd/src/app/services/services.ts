@@ -7,9 +7,27 @@ import { Film } from '../interfaces/film';
 })
 export class Services {
 private filmfield: Film[] = [
-  { FilmId: 1, Title: 'Inception',   ReleaseYear: 2025, Genre: 'comedy', imageUrl: 'assets/inception.jpg' },
-  { FilmId: 2, Title: 'The Matrix',  ReleaseYear: 2024, Genre: 'action', imageUrl: 'assets/matrix.jpg' },
-  { FilmId: 3, Title: 'Interstellar',ReleaseYear: 2023, Genre: 'drama',  imageUrl: 'assets/interstellar.jpg' },
+  {
+    FilmId: 1,
+    Title: 'Inception',
+    ReleaseYear: 2025,
+    Genre: 'Comedy',
+    imageUrl: 'https://via.placeholder.com/300x450?text=Inception'
+  },
+  {
+    FilmId: 2,
+    Title: 'The Matrix',
+    ReleaseYear: 2024,
+    Genre: 'Action',
+    imageUrl: 'https://via.placeholder.com/300x450?text=Matrix'
+  },
+  {
+    FilmId: 3,
+    Title: 'Interstellar',
+    ReleaseYear: 2023,
+    Genre: 'Drama',
+    imageUrl: 'https://via.placeholder.com/300x450?text=Interstellar'
+  }
 ];
 
 

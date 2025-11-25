@@ -45,15 +45,7 @@ selectGenre(genre: string) {
     this.activeGenre = genre;
     this.isGenreOpen = false;
   }
-
-// films: any[] = [
-//     { title: 'Film 1', genre: 'Sci-Fi', imageUrl: 'assets/film1.jpg' },
-//     { title: 'Film 2', genre: 'Drama', imageUrl: 'assets/film2.jpg' },
-//     { title: 'Film 3', genre: 'Thriller', imageUrl: 'assets/film3.jpg' },
-//     { title: 'Film 4', genre: 'Sci-Fi', imageUrl: 'assets/film4.jpg' },
-//     { title: 'Film 5', genre: 'Drama', imageUrl: 'assets/film5.jpg' },
-//   ];
-
+  
 get filteredFilms(): any[]{
   if (!this.activeGenre || this.activeGenre === 'All'){
     return this.films;
