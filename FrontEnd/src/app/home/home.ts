@@ -40,6 +40,13 @@ films: any[] = [
     { title: 'Film 5', genre: 'Drama', imageUrl: 'assets/film5.jpg' },
   ];
 
+get filteredFilms(): any[]{
+  if (!this.activeGenre || this.activeGenre === 'All'){
+    return this.films;
+  }
+  return this.films.filter(film => film.genre === this.activeGenre);
+}
+
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent){
     const target = event.target as HTMLElement;

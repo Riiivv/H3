@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Interfaces } from './interfaces';
+import { FilmAdministration } from './film-administration';
 
-describe('Interfaces', () => {
-  let component: Interfaces;
-  let fixture: ComponentFixture<Interfaces>;
+describe('FilmAdministration', () => {
+  let component: FilmAdministration;
+  let fixture: ComponentFixture<FilmAdministration>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Interfaces]
+      imports: [FilmAdministration]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Interfaces);
+    fixture = TestBed.createComponent(FilmAdministration);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
