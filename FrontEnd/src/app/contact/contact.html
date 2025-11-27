@@ -1,1 +1,68 @@
-<p>contact works!</p>
+<div class="contact-page">
+  <div class="contact-wrapper">
+    <!-- Venstre side: tekst -->
+    <section class="info-column">
+      <h1>Find dine billetter</h1>
+      <p class="lead">
+        Indtast din e-mail eller dit telefonnummer samt din kode for at
+        genfinde dine ordrer (billetter og gavekort).
+      </p>
+
+      <p class="small-text">
+        Denne side er en del af et skoleprojekt, hvor der bruges Angular
+        frontend, C# backend og en SQL-database til at håndtere ordrer og
+        login sikkert.
+      </p>
+    </section>
+
+    <!-- Højre side: login form -->
+    <section class="form-column">
+      <h2>Login</h2>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+        <!-- E-mail / mobil -->
+        <div class="form-group">
+          <label for="identifier">E-mail eller mobilnr</label>
+          <input
+            id="identifier"
+            type="text"
+            formControlName="identifier"
+            placeholder="fx navn@mail.dk eller +45 12 34 56 78"
+          />
+          <div
+            class="error"
+            *ngIf="submitted && loginForm.get('identifier')?.invalid"
+          >
+            Skriv venligst din e-mail eller dit telefonnummer.
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password">Kodeord</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            placeholder="Din adgangskode"
+          />
+          <div
+            class="error"
+            *ngIf="submitted && loginForm.get('password')?.invalid"
+          >
+            Kodeordet skal mindst være 4 tegn.
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          Login
+        </button>
+
+        <p class="helper">
+          Har du glemt din kode? I en rigtig løsning ville du kunne få tilsendt
+          en ny via e-mail eller SMS.
+        </p>
+      </form>
+    </section>
+  </div>
+</div>

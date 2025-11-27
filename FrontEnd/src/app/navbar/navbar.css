@@ -1,30 +1,86 @@
-.topbar{
-    display:flex;
+/* ----------------------------------------
+   NEON HEADER
+---------------------------------------- */
+
+.site-header {
+    padding: 22px 32px 10px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 20px 40px;
+    gap: 14px;
 }
 
-.topbar-left,
-.logo,
-.right-text{
- flex: 1;
-}
-
-.logo{
+/* Øverste række: logo + "Vises nu" */
+.header-top {
+    width: 100%;
+    max-width: 1100px;
     display: flex;
-    justify-content: center;
-    font-size: 30px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Tom placeholder så "Vises nu" står til højre */
+.placeholder {
+    width: 80px;
+}
+
+/* Det røde WebBio-logo med neon */
+.site-title {
+    font-size: 2rem;
+    font-weight: 700;
     cursor: pointer;
-    user-select: none;
-    color: red;
+    color: #ff4b6e;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-shadow:
+        0 0 10px rgba(255, 75, 110, 0.9),
+        0 0 25px rgba(255, 75, 110, 0.6),
+        0 0 40px rgba(255, 75, 110, 0.3);
 }
-.right-text{
-    text-align: right;
-    white-space: nowrap;
+
+/* "Vises nu" tekst */
+.right-text {
+    color: #d6c8ff;
+    font-size: 0.9rem;
+    opacity: 0.8;
 }
-.main-nav{
+
+/* Navigation */
+.main-nav {
     display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-bottom: 20px;
+    gap: 26px;
+    margin-top: 8px;
+}
+
+.main-nav a {
+    position: relative;
+    font-size: 0.9rem;
+    color: #d6c8ff;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    opacity: 0.9;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+/* Neon underline på hover */
+.main-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #ff4b6e, #8c38ff);
+    transform: scaleX(0);
+    transition: transform 0.2s;
+}
+
+.main-nav a:hover {
+    color: #ffffff;
+    opacity: 1;
+}
+
+.main-nav a:hover::after {
+    transform: scaleX(1);
 }

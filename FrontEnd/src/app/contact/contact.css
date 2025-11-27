@@ -1,0 +1,136 @@
+.contact-page {
+  min-height: calc(100vh - 140px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px 80px;
+  color: #f5f0ff;
+}
+
+.contact-wrapper {
+  max-width: 1100px;
+  width: 100%;
+  display: grid;
+  gap: 40px;
+}
+
+@media (min-width: 900px) {
+  .contact-wrapper {
+    grid-template-columns: 1.2fr 1fr;
+  }
+}
+
+/* Venstre side */
+.info-column h1 {
+  font-size: 2.1rem;
+  margin-bottom: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lead {
+  font-size: 0.98rem;
+  color: #d9ceff;
+  max-width: 420px;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.small-text {
+  font-size: 0.85rem;
+  color: #ac9fe0;
+  max-width: 460px;
+}
+
+/* Højre side (form) */
+.form-column {
+  background: radial-gradient(circle at top left, #2b1747, #140822 55%, #090213);
+  border-radius: 18px;
+  padding: 22px 24px 26px;
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.form-column h2 {
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  color: #e8dcff;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #c7b7ff;
+}
+
+.form-group input {
+  background: #0b0416;
+  border-radius: 999px;
+  border: 1px solid #3a274e;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  color: #f5f0ff;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.form-group input::placeholder {
+  color: #8e7ab8;
+}
+
+.form-group input:focus {
+  border-color: #8c38ff;
+  box-shadow: 0 0 0 1px rgba(140, 56, 255, 0.6);
+  background: #130824;
+}
+
+.error {
+  font-size: 0.78rem;
+  color: #ff8a8a;
+  margin-left: 8px;
+}
+
+/* Knap */
+.submit-btn {
+  margin-top: 6px;
+  width: 130px;
+  padding: 10px 0;
+  border-radius: 999px;
+  border: 1px solid #f3c623;
+  background: #171219;
+  color: #f3f0ff;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.8),
+    0 0 10px rgba(243, 198, 35, 0.6);
+  transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  background: #221628;
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.95),
+    0 0 16px rgba(243, 198, 35, 0.8);
+}
+
+/* Hjælpetekst */
+.helper {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #b4a4f0;
+}

@@ -1,0 +1,120 @@
+<div class="details-page" *ngIf="film">
+  <!-- Venstre side: plakat + info -->
+  <div class="left-column">
+    <button class="back-link" (click)="goBack()">
+      ← Tilbage til filmoversigt
+    </button>
+
+    <div class="poster-card">
+      <img [src]="film.imageUrl" [alt]="film.Title" />
+      <div class="rating-chip">8.5</div>
+    </div>
+
+    <div class="film-info">
+      <h2>{{ film.Title }}</h2>
+      <p class="subtitle">En fantastisk filmoplevelse</p>
+
+      <div class="tags">
+        <span class="tag">{{ film.Genre }}</span>
+      </div>
+
+      <div class="meta">
+        <div>⏱ 2t 15min</div>
+        <div>📅 {{ film.ReleaseYear }}</div>
+      </div>
+
+      <p class="description">
+        En fascinerende historie om håb, forandring og nye begyndelser,
+        når året skifter. (Dummy tekst – kan ændres).
+      </p>
+    </div>
+  </div>
+
+  <!-- Højre side: datoer + spilletider -->
+  <div class="right-column">
+    <h3>Vælg dato</h3>
+
+    <div class="date-row">
+      <!-- ALLE DAGE -->
+      <button
+        class="date-pill all-days-pill"
+        [class.active]="activeDayIndex === -1"
+        (click)="selectDay(-1)"
+      >
+        <div class="date-main">ALLE</div>
+        <div class="date-sub">DAGE</div>
+      </button>
+
+      <!-- Enkelt-dage -->
+      <button
+        class="date-pill"
+        [class.active]="activeDayIndex === i"
+        *ngFor="let day of days; let i = index"
+        (click)="selectDay(i)"
+      >
+        <div class="date-main">
+          {{ day.date | date: 'EEE' | uppercase }}
+        </div>
+        <div class="date-sub">
+          {{ day.date | date: 'd MMM' }}
+        </div>
+      </button>
+    </div>
+
+    <!-- Når EN specifik dag er valgt -->
+    <ng-container *ngIf="activeDayIndex !== -1">
+      <h4 class="section-label">
+        Tilgængelige visninger –
+        {{ days[activeDayIndex]?.date | date: 'd. MMMM' }}
+      </h4>
+
+      <div class="schedule-card" *ngIf="film.showtimes?.length">
+        <div class="schedule-title">
+          <span class="clock-icon">🕒</span>
+          <span>{{ film.Title }}</span>
+        </div>
+
+        <div class="times-row">
+          <div class="time-pill" *ngFor="let s of film.showtimes">
+            <div class="hall">{{ s.hall }}</div>
+
+            <div class="time-list">
+              <span class="time" *ngFor="let t of s.times">
+                {{ t }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Når ALLE DAGE er valgt -->
+    <ng-container *ngIf="activeDayIndex === -1">
+      <div class="day-block" *ngFor="let d of days">
+        <h4 class="section-label">
+          {{ d.date | date:'EEEE d. MMMM' }}
+        </h4>
+
+        <div class="schedule-card" *ngIf="film.showtimes?.length">
+          <div class="schedule-title">
+            <span class="clock-icon">🕒</span>
+            <span>{{ film.Title }}</span>
+          </div>
+
+          <div class="times-row">
+            <div class="time-pill" *ngFor="let s of film.showtimes">
+              <div class="hall">{{ s.hall }}</div>
+
+              <div class="time-list">
+                <span class="time" *ngFor="let t of s.times">
+                  {{ t }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

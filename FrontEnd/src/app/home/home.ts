@@ -25,7 +25,7 @@ export class Home implements OnInit {
     { dayName: 'SØN', date: 30, month: 'NOV' },
   ];
 
-  genres = ['All','Action','Adventure','Animation','Comedy','Crime','Documentary','Drama','Family','Fantasy','History','Horror','Mystery','Romance','Science Fiction','Thriller','War','Western',];
+  genres = ['All Movies','Action','Adventure','Animation','Comedy','Crime','Documentary','Drama','Family','Fantasy','History','Horror','Mystery','Romance','Science Fiction','Thriller','War','Western',];
 
 activeGenre: string = '';
 isGenreOpen: boolean = false;
@@ -33,7 +33,9 @@ isGenreOpen: boolean = false;
   // film fra din service
   films: Film[] = [];
 
-  constructor(private filmService: Services) {}
+constructor(private filmService: Services) {}
+
+  
 
   ngOnInit() {
     this.filmService.getFilms().subscribe((data) => {
@@ -47,7 +49,7 @@ selectGenre(genre: string) {
   }
   
 get filteredFilms(): any[]{
-  if (!this.activeGenre || this.activeGenre === 'All'){
+  if (!this.activeGenre || this.activeGenre === 'All Movies') {
     return this.films;
   }
   return this.films.filter(film => film.Genre === this.activeGenre);

@@ -1,33 +1,50 @@
+<!-- SØGEFELT -->
 <div class="search-box">
   <span class="search-icon">🔍</span>
-  <input type="text" placeholder="search for movie...">
+  <input type="text" placeholder="search for movie..." />
 </div>
 
+<!-- GENRE-DROPDOWN -->
 <div class="genre-dropdown">
   <button class="dropdown-trigger" (click)="isGenreOpen = !isGenreOpen">
     {{ activeGenre || 'Choose Genre' }} ▼
   </button>
 
   <div class="dropdown-menu" *ngIf="isGenreOpen">
-    <button class="dropdown-item" *ngFor="let g of genres"
-    (click)="selectGenre(g)"
-    [class.active]="g === activeGenre">
+    <button
+      class="dropdown-item"
+      *ngFor="let g of genres"
+      (click)="selectGenre(g)"
+      [class.active]="g === activeGenre"
+    >
       {{ g }}
     </button>
-    </div>
-</div>
-
-<div class="film-grid">
-  <div class="film-card" *ngFor="let film of filteredFilms">
-    <img [src]="film.imageUrl">
-    <div class="rating">{{ film.rating }}</div>
   </div>
 </div>
 
+<!-- FILM-KORT (POSTERS) -->
 <div class="film-grid">
   <div class="film-card" *ngFor="let film of filteredFilms">
-    <!-- midlertidigt tekst, indtil du har billeder -->
-    <h3>{{ film.Title }}</h3>
-    <p>{{ film.Genre }} • {{ film.ReleaseYear }}</p>
+    <!-- Plakat klikbar -->
+    <a class="poster-wrapper" [routerLink]="['/film', film.FilmId]">
+      <img [src]="film.imageUrl" alt="{{ film.Title }}" />
+    </a>
+
+    <!-- Titel klikbar (valgfrit) -->
+    <div class="film-title-bar" [routerLink]="['/film', film.FilmId]">
+      {{ film.Title }}
+    </div>
+
+    <div class="film-info-row">
+      {{ film.Genre }} • {{ film.ReleaseYear }}
+    </div>
+
+    <!-- Knap klikbar -->
+    <button
+      class="btn-all-days"
+      [routerLink]="['/film', film.FilmId]"
+    >
+      SE ALLE DAGE
+    </button>
   </div>
 </div>

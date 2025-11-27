@@ -1,16 +1,20 @@
-<header class="topbar">
-  <div class="topbar-left"></div>
+<header class="site-header">
+  <div class="header-top">
+    <div class="placeholder"></div>
 
-  <div class="logo" routerLink="/">WebBio</div>
+    <div class="site-title" routerLink="/">
+      WebBio
+    </div>
 
-  <div class="right-text">Vises nu</div>
+    <div class="right-text">Vises nu</div>
+  </div>
+
+  <nav class="main-nav">
+    <a routerLink="/home">Home</a>
+    <a routerLink="/tickets">Program&tickets</a>
+    <a routerLink="/all-movies">All Movies</a>
+    <a routerLink="/contact">Contact</a>
+    <a routerLink="/about">About</a>
+    <a routerLink="/admin">Admin</a>
+  </nav>
 </header>
-
-<nav class="main-nav">
-  <a routerLink="/home" routerLinkActive="active">Home</a>
-  <a routerLink="/tickets" routerLinkActive="active">Program&tickets</a>
-  <a routerLink="/all-movies" routerLinkActive="active">All Movies</a>
-  <a routerLink="/contact" routerLinkActive="active">Contact</a>
-  <a routerLink="/about" routerLinkActive="active">About</a>
-  <a routerLink="/admin" routerLinkActive="active">Admin</a>
-</nav>
