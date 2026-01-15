@@ -1,1 +1,61 @@
-<p>all-movies works!</p>
+<div class="all-movies-page">
+  <h2 class="page-title">All Movies</h2>
+
+  <div *ngIf="loading()" class="state-text">Loader...</div>
+  <div *ngIf="error()" class="state-text error">{{ error() }}</div>
+
+  <div *ngIf="!loading() && !error() && !movies().length" class="state-text">
+    Ingen film fundet.
+  </div>
+
+  <div class="carousel-wrap" *ngIf="!loading() && !error() && movies().length">
+    <button class="nav-btn nav-left" type="button" (click)="scrollLeft()" aria-label="Scroll left">
+      ‹
+    </button>
+
+    <div
+      #track
+      class="carousel-track"
+      (pointerdown)="onPointerDown($event)"
+      (pointermove)="onPointerMove($event)"
+      (pointerup)="onPointerUp($event)"
+      (pointercancel)="onPointerUp($event)"
+      (pointerleave)="onPointerLeave()"
+    >
+      <div class="film-card" *ngFor="let film of movies()">
+        <a
+          class="poster-wrapper"
+          [routerLink]="['/film', film.moviesId]"
+          (click)="maybeBlockClick($event)"
+        >
+          <img [src]="film.imageUrl" [alt]="film.title" />
+        </a>
+
+        <a
+          class="film-title-bar"
+          [routerLink]="['/film', film.moviesId]"
+          (click)="maybeBlockClick($event)"
+        >
+          {{ film.title }}
+        </a>
+
+        <div class="film-info-row">
+          {{ film.genre }} • {{ film.releaseYear }}
+        </div>
+
+        <button
+          class="btn-all-days"
+          type="button"
+          [routerLink]="['/film', film.moviesId]"
+          (click)="maybeBlockClick($event)"
+        >
+          SE ALLE DAGE
+        </button>
+      </div>
+    </div>
+
+    <button class="nav-btn nav-right" type="button" (click)="scrollRight()" aria-label="Scroll right">
+      ›
+    </button>
+  </div>
+</div>

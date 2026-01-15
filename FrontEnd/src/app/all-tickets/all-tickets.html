@@ -1,0 +1,101 @@
+<div class="ticket-page">
+
+  <!-- Modal: vælg antal billetter -->
+  <div class="modal-backdrop" *ngIf="showTicketCountModal()">
+    <div class="modal">
+      <h2>Vælg antal billetter</h2>
+
+      <div class="ticket-grid">
+        <button
+          class="ticket-btn"
+          type="button"
+          *ngFor="let n of [1,2,3,4,5,6,7,8,9,10]"
+          (click)="pickTicketCount(n)"
+        >
+          {{ n }}
+        </button>
+      </div>
+
+      <p class="note">Vælg hvor mange pladser du vil reservere.</p>
+    </div>
+  </div>
+
+  <!-- Topbar -->
+  <div class="topbar" *ngIf="!showTicketCountModal()">
+    <div class="status">
+      <div>
+        Valgte: {{ selectedSeatIds().length }} / {{ ticketCount() }}
+        <span *ngIf="secondsLeft() > 0"> · Reserveret: {{ secondsLeft() }}s</span>
+      </div>
+      <div *ngIf="error()" class="error">{{ error() }}</div>
+      <div *ngIf="loading()">Loader sæder…</div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" type="button" (click)="toggleLegend()">i</button>
+      <button class="btn" type="button" (click)="releaseHolds()">FRIGIV</button>
+      <button class="btn btn-primary" type="button">VIDERE</button>
+    </div>
+  </div>
+
+  <!-- Layout: seatmap + legend -->
+  <div class="layout" *ngIf="!showTicketCountModal()">
+
+    <!-- Seat map -->
+    <div class="main">
+      <div class="screen">LÆRRED</div>
+
+      <div class="seatmap" *ngIf="seats().length > 0">
+        <div class="rows">
+          <div class="row" *ngFor="let r of rows()">
+            <div class="row-label">{{ r.row }}</div>
+
+            <div class="seats">
+              <button
+                type="button"
+                *ngFor="let s of r.seats"
+                [class]="seatClass(s)"
+                (click)="onSeatClick(s)"
+                [title]="'Row ' + s.rowNumber + ' Seat ' + s.seatNumber + ' (' + s.seatType + ')'"
+              >
+                {{ s.seatNumber }}
+              </button>
+            </div>
+
+            <div class="row-label">{{ r.row }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!loading() && seats().length === 0" class="error">
+        Ingen seats fundet for hallId={{ hallId() }}.
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend" *ngIf="showLegend()">
+      <h3>Legend</h3>
+
+      <div class="legend-item">
+        <span class="swatch seat-selected"></span>
+        Valgt
+      </div>
+
+      <div class="legend-item">
+        <span class="swatch seat-available"></span>
+        Ledig
+      </div>
+
+      <div class="legend-item">
+        <span class="swatch seat-wheelchair"></span>
+        Wheelchair
+      </div>
+
+      <div class="legend-item">
+        <span class="swatch seat-companion"></span>
+        Companion
+      </div>
+    </div>
+
+  </div>
+</div>

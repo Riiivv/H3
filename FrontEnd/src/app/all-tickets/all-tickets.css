@@ -1,0 +1,301 @@
+:host {
+  display: block;
+  color: #fff;
+}
+
+/* Page layout */
+.ticket-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px 16px 60px;
+}
+
+/* Topbar */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: radial-gradient(circle at 0% 0%, #2b1747, #1a1028 48%, #0b0416 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.status {
+  display: grid;
+  gap: 6px;
+  color: #f5f0ff;
+  font-size: 0.9rem;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f5f0ff;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(140, 56, 255, 0.6);
+  box-shadow: 0 0 0 1px rgba(140, 56, 255, 0.25);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #f3c623, #ff6fd8);
+  color: #140822;
+  border: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.9);
+}
+
+/* Main grid */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 18px;
+  margin-top: 16px;
+  align-items: start;
+}
+
+@media (max-width: 980px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Main seatmap card */
+.main {
+  background: radial-gradient(circle at 0% 0%, #2b1747, #1a1028 48%, #0b0416 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  padding: 16px;
+}
+
+/* Screen */
+.screen {
+  text-align: center;
+  padding: 10px 12px;
+  margin: 0 auto 14px;
+  width: min(520px, 100%);
+  border-radius: 999px;
+  color: #140822;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #f3c623, #ff6fd8);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.8);
+}
+
+/* Rows */
+.rows {
+  display: grid;
+  gap: 10px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 42px 1fr 42px;
+  gap: 10px;
+  align-items: center;
+}
+
+.row-label {
+  text-align: center;
+  font-weight: 800;
+  color: #c3b6ff;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+}
+
+/* Seat buttons */
+.seat {
+  height: 34px;
+  min-width: 34px;
+  padding: 0 6px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(0, 0, 0, 0.22);
+  color: #f5f0ff;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease, border-color 0.12s ease;
+  margin-right: 6px;
+  margin-bottom: 6px;
+}
+
+.seat:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: rgba(140, 56, 255, 0.6);
+  box-shadow: 0 0 0 1px rgba(140, 56, 255, 0.22);
+}
+
+.seat:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Status colors */
+.seat-available {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.seat-selected {
+  background: rgba(72, 255, 173, 0.12);
+  border-color: rgba(72, 255, 173, 0.28);
+  box-shadow: 0 0 0 1px rgba(72, 255, 173, 0.10);
+  color: #c9ffe8;
+}
+
+.seat-wheelchair {
+  background: rgba(140, 56, 255, 0.14);
+  border-color: rgba(140, 56, 255, 0.35);
+  color: #e8e0ff;
+}
+
+.seat-companion {
+  background: rgba(124, 201, 111, 0.16);
+  border-color: rgba(124, 201, 111, 0.38);
+  color: #e8ffe9;
+}
+
+/* Error line */
+.error {
+  margin: 10px 0 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 77, 109, 0.35);
+  box-shadow: 0 0 0 1px rgba(255, 77, 109, 0.12);
+  background: rgba(0, 0, 0, 0.25);
+  color: #ffd1da;
+}
+
+/* Legend */
+.legend {
+  background: radial-gradient(circle at 0% 0%, #2b1747, #1a1028 48%, #0b0416 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+  padding: 14px 14px;
+}
+
+.legend h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 10px;
+}
+
+.swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Swatches match seat colors */
+.swatch.seat-selected { background: rgba(72, 255, 173, 0.12); border-color: rgba(72, 255, 173, 0.28); }
+.swatch.seat-available { background: rgba(255, 255, 255, 0.06); }
+.swatch.seat-wheelchair { background: rgba(140, 56, 255, 0.14); border-color: rgba(140, 56, 255, 0.35); }
+.swatch.seat-companion { background: rgba(124, 201, 111, 0.16); border-color: rgba(124, 201, 111, 0.38); }
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+}
+
+.modal {
+  width: min(520px, calc(100% - 28px));
+  border-radius: 16px;
+  overflow: hidden;
+  background: radial-gradient(circle at 0% 0%, #2b1747, #1a1028 48%, #0b0416 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.75);
+  padding: 16px;
+}
+
+.modal h2 {
+  margin: 0 0 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.ticket-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 520px) {
+  .ticket-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.ticket-btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 12px 10px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f5f0ff;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ticket-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(140, 56, 255, 0.6);
+  box-shadow: 0 0 0 1px rgba(140, 56, 255, 0.25);
+}
+
+.note {
+  margin-top: 12px;
+  color: #c3b6ff;
+  font-size: 0.9rem;
+}

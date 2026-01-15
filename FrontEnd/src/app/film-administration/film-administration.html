@@ -1,20 +1,142 @@
-<ul>
-  <li *ngFor="let film of FilmList">
-    {{ film.FilmId }} – {{ film.Title }} ({{ film.Genre }}, {{ film.ReleaseYear }})
-  </li>
-</ul>
+<h2>Admin – Film</h2>
 
-<table>
-  <tr>
-    <th>Id</th>
-    <th>Titel</th>
-    <th>År</th>
-    <th>Genre</th>
-  </tr>
-  <tr *ngFor="let film of FilmList">
-    <td>{{ film.FilmId }}</td>
-    <td>{{ film.Title }}</td>
-    <td>{{ film.ReleaseYear }}</td>
-    <td>{{ film.Genre }}</td>
-  </tr>
-</table>
+<div class="admin-wrap">
+  <div *ngIf="error()" class="alert error">{{ error() }}</div>
+  <div *ngIf="success()" class="alert success">{{ success() }}</div>
+
+  <div class="admin-grid">
+    <!-- LEFT: Movie + Showtimes -->
+    <section class="card">
+      <div class="card-header">
+        <h3>{{ editingId() === null ? 'Opret film' : ('Rediger film (ID: ' + editingId() + ')') }}</h3>
+        <span class="small" *ngIf="loading()">Loader…</span>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="submitMovie($event)">
+          <div class="form-grid">
+            <label>Titel <input placeholder="Titel" formControlName="title" /></label>
+            <label>Genre <input placeholder="Genre" formControlName="genre" /></label>
+            <label>Release date <input type="date" formControlName="releaseDate" /></label>
+            <label>Director <input placeholder="Director" formControlName="director" /></label>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" type="submit" [disabled]="loading()">
+              {{ editingId() === null ? 'Opret' : 'Gem' }}
+            </button>
+            <button class="btn btn-secondary" type="button" (click)="startCreate()" [disabled]="loading()">
+              Ryd
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- SHOWTIMES ONLY WHEN EDITING A MOVIE -->
+      <div class="card-body" *ngIf="editingId() !== null">
+        <div class="divider"></div>
+        <h3 class="sub-title">Showtimes</h3>
+
+        <form [formGroup]="showtimeForm" (ngSubmit)="createShowtime($event)">
+          <div class="form-grid">
+            <label>Dato <input type="date" formControlName="date" /></label>
+            <label>Tid <input type="time" formControlName="time" /></label>
+
+            <label>
+              Sal
+              <select class="select" formControlName="hallId">
+                <option [ngValue]="null">Vælg sal…</option> 
+                <option *ngFor="let h of halls()" [value]="h.hallId">
+                  Hall {{ h.hallnumber }} (ID: {{ h.hallId }})
+                </option>
+              </select>
+            </label>
+
+            <label>Pris <input type="number" formControlName="price" min="0" /></label>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" type="submit" [disabled]="loadingShowtimes()">
+              Opret showtime
+            </button>
+          </div>
+        </form>
+
+        <div class="small" *ngIf="loadingShowtimes()">Loader showtimes…</div>
+
+        <div class="table-wrap" style="margin-top: 12px;">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:90px;">Id</th>
+                <th>Start</th>
+                <th style="width:120px;">Hall</th>
+                <th style="width:120px;">Pris</th>
+                <th style="width:140px;"></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let s of showtimes()">
+                <td>{{ s.showtimeId }}</td>
+                <td>{{ s.startTime | date:'EEE dd/MM yyyy HH:mm' }}</td>
+                <td>{{ s.hallNumber ?? s.hallId }}</td>
+                <td>{{ s.price }} kr</td>
+                <td class="actions-col">
+                  <button class="btn btn-danger btn-sm" type="button" (click)="deleteShowtime(s)" [disabled]="loadingShowtimes()">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+
+              <tr *ngIf="!loadingShowtimes() && showtimes().length === 0">
+                <td colspan="5" class="small">Ingen showtimes endnu.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Movies list -->
+    <section class="card">
+      <div class="card-header">
+        <h3>Film ({{ movies().length }})</h3>
+        <span class="small">Klik Edit for showtimes</span>
+      </div>
+
+      <div class="card-body table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:70px;">Id</th>
+              <th>Titel</th>
+              <th style="width:90px;">År</th>
+              <th style="width:160px;">Genre</th>
+              <th style="width:200px;">Director</th>
+              <th style="width:160px;"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let m of movies()">
+              <td>{{ m.moviesId }}</td>
+              <td>{{ m.title }}</td>
+              <td>{{ m.releaseDate | date:'yyyy' }}</td>
+              <td>{{ m.genre }}</td>
+              <td>{{ m.director }}</td>
+              <td class="actions-col">
+                <button class="btn btn-secondary btn-sm" type="button" (click)="startEdit(m)" [disabled]="loading()">
+                  Edit
+                </button>
+                <button class="btn btn-danger btn-sm" type="button" (click)="deleteMovie(m)" [disabled]="loading()">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>

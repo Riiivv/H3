@@ -199,3 +199,17 @@
   font-weight: 600;
   font-size: 0.95rem;
 }
+.week-status {
+  margin: 10px 0 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.22);
+  color: #c3b6ff;
+  font-size: 0.9rem;
+}
+
+.small {
+  opacity: 0.9;
+  color: #e8e0ff;
+}

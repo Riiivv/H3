@@ -1,0 +1,24 @@
+<div class="page">
+  <h2>Sæder</h2>
+
+  <p *ngIf="hallId() !== null">HallId: {{ hallId() }}</p>
+
+  <div *ngIf="loading()">Loader...</div>
+  <div *ngIf="error()">{{ error() }}</div>
+
+  <div class="seatmap" *ngIf="!loading() && seats().length > 0">
+    <div class="row" *ngFor="let r of rows()">
+      <div class="row-label">{{ r.row }}</div>
+
+      <div class="seat" *ngFor="let s of r.seats" [class]="seatClass(s)">
+        {{ s.seatNumber }}
+      </div>
+
+      <div class="row-label">{{ r.row }}</div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading() && seats().length === 0">
+    Ingen sæder fundet.
+  </div>
+</div>

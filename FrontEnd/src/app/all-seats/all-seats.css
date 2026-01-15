@@ -1,0 +1,80 @@
+:host {
+  display: block;
+  color: #fff;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px 16px 60px;
+}
+
+h2 {
+  margin: 10px 0 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.seatmap {
+  background: radial-gradient(circle at 0% 0%, #2b1747, #1a1028 48%, #0b0416 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+  padding: 16px;
+  overflow: auto;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 42px 1fr 42px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.row:last-child {
+  margin-bottom: 0;
+}
+
+.row-label {
+  text-align: center;
+  font-weight: 800;
+  color: #c3b6ff;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+}
+
+.seat {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  min-width: 34px;
+  padding: 0 6px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.06);
+  color: #f5f0ff;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  user-select: none;
+}
+
+.page > div[ngif] {
+  margin-top: 10px;
+}
+
+/* Simple info/error lines */
+.page div {
+  color: #f5f0ff;
+}
+
+.page .error {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 77, 109, 0.35);
+  box-shadow: 0 0 0 1px rgba(255, 77, 109, 0.12);
+  background: rgba(0, 0, 0, 0.25);
+  color: #ffd1da;
+}

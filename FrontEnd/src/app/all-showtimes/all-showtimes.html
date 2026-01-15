@@ -1,0 +1,8 @@
+<ul>
+  <li *ngFor="let s of showtimes">
+    {{ s.movieTitle }}
+    — Hall {{ s.hallNumber }}
+    — {{ s.startTime | date:'short' }}
+    — {{ s.price }} kr
+  </li>
+</ul>
