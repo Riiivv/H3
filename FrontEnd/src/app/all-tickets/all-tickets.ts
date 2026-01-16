@@ -14,7 +14,7 @@ interface SeatApi {
   rowNumber: number;
   seatNumber: number;
   hallId: number;
-  seatType: number; // 0/1/2 fra backend
+  seatType: SeatType | number;
 }
 
 interface SeatUI {
@@ -24,6 +24,12 @@ interface SeatUI {
   hallId: number;
   seatType: SeatType;
   status: SeatStatus;
+}
+
+interface ShowtimeApi {
+  showtimeId: number;
+  hallId: number;
+  price: number;
 }
 
 @Component({
@@ -36,7 +42,11 @@ interface SeatUI {
 export class AllTickets implements OnInit {
   private readonly baseUrl = environment.apiBaseUrl;
 
+  showtimeId = signal<number>(0);
   hallId = signal<number>(0);
+
+  // dynamisk pris (kommer fra showtime)
+  ticketPrice = signal<number>(0);
 
   showLegend = signal(true);
   showTicketCountModal = signal(true);
@@ -59,24 +69,23 @@ export class AllTickets implements OnInit {
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    // Robust param read: prøver showtimeId, hallId, id
-    const raw =
-      this.route.snapshot.paramMap.get('showtimeId') ??
-      this.route.snapshot.paramMap.get('hallId') ??
-      this.route.snapshot.paramMap.get('id');
+    const id = Number(this.route.snapshot.paramMap.get('showtimeId'));
+    this.showtimeId.set(id);
 
-    const id = Number(raw);
-    this.hallId.set(Number.isFinite(id) ? id : 0);
-
-    if (!this.hallId() || this.hallId() <= 0) {
-      this.error.set('Manglende hallId i URL.');
-      this.showTicketCountModal.set(false);
+    if (!id || id <= 0) {
+      this.error.set('Manglende showtimeId i URL.');
       return;
     }
+
+    this.loadShowtime(); // sætter hallId + ticketPrice
 
     interval(1000)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.tickHold());
+  }
+
+  private showtimeUrl(showtimeId: number) {
+    return `${this.baseUrl}/api/showtimes/${showtimeId}`;
   }
 
   private seatsUrl() {
@@ -87,6 +96,20 @@ export class AllTickets implements OnInit {
     if (v === 1 || v === 'Wheelchair') return 'Wheelchair';
     if (v === 2 || v === 'Companion') return 'Companion';
     return 'Standard';
+  }
+
+  private loadShowtime(): void {
+    this.http.get<ShowtimeApi>(this.showtimeUrl(this.showtimeId()))
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (st) => {
+          this.hallId.set(Number(st?.hallId ?? 0));
+          this.ticketPrice.set(Number(st?.price ?? 0));
+        },
+        error: () => {
+          this.error.set('Kunne ikke hente showtime (pris/hall).');
+        }
+      });
   }
 
   pickTicketCount(n: number): void {
@@ -107,24 +130,24 @@ export class AllTickets implements OnInit {
     this.loading.set(true);
     this.error.set('');
 
-    this.http
-      .get<SeatApi[]>(this.seatsUrl())
+    this.http.get<SeatApi[]>(this.seatsUrl())
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (data) => {
-          const all: SeatUI[] = (data ?? []).map((s) => ({
+          const all = (data ?? []).map(s => ({
             seatId: s.seatId,
             rowNumber: s.rowNumber,
             seatNumber: s.seatNumber,
             hallId: s.hallId,
             seatType: this.toSeatType(s.seatType),
-            status: 'Available',
-          }));
+            status: 'Available' as SeatStatus,
+          })) as SeatUI[];
 
-          const filtered = all.filter((s) => s.hallId === this.hallId());
+          const hid = this.hallId();
+          const filtered = all.filter(s => s.hallId === hid);
 
           if (filtered.length === 0) {
-            this.error.set(`Ingen seats fundet for hallId=${this.hallId()}.`);
+            this.error.set(`Ingen seats fundet for hallId=${hid}.`);
           }
 
           filtered.sort((a, b) => (a.rowNumber - b.rowNumber) || (a.seatNumber - b.seatNumber));
@@ -136,23 +159,22 @@ export class AllTickets implements OnInit {
         error: () => {
           this.error.set('Kunne ikke hente seats.');
           this.loading.set(false);
-        },
+        }
       });
   }
 
   private autoPickRandomSeats(): void {
-    const list = this.seats().filter((s) => s.status === 'Available');
+    const list = this.seats().filter(s => s.status === 'Available');
     const wanted = this.ticketCount();
 
-    // Undgå wheelchair/companion hvis muligt
-    const preferred = list.filter((s) => s.seatType === 'Standard');
+    const preferred = list.filter(s => s.seatType === 'Standard');
     const source = preferred.length >= wanted ? preferred : list;
 
     const shuffled = [...source].sort(() => Math.random() - 0.5);
-    const picked = shuffled.slice(0, wanted).map((s) => s.seatId);
+    const picked = shuffled.slice(0, wanted).map(s => s.seatId);
 
     this.selectedSeatIds.set(picked);
-    this.secondsLeft.set(picked.length > 0 ? 120 : 0);
+    this.secondsLeft.set(120);
     this.refreshStatus();
   }
 
@@ -162,7 +184,7 @@ export class AllTickets implements OnInit {
 
     let next: number[];
     if (isSelected) {
-      next = current.filter((id) => id !== seat.seatId);
+      next = current.filter(id => id !== seat.seatId);
     } else {
       if (current.length >= this.ticketCount()) return;
       next = [...current, seat.seatId];
@@ -179,13 +201,38 @@ export class AllTickets implements OnInit {
     this.refreshStatus();
   }
 
+  onNext(): void {
+    const count = this.selectedSeatIds().length;
+
+    if (count !== this.ticketCount()) {
+      this.error.set(`Du skal vælge præcis ${this.ticketCount()} pladser før du kan gå videre.`);
+      return;
+    }
+
+    const price = this.ticketPrice();
+    if (!price || price <= 0) {
+      this.error.set('Pris mangler (showtime.price).');
+      return;
+    }
+
+    const total = price * count;
+
+    console.log('--- ORDER SUMMARY ---');
+    console.log('ShowtimeId:', this.showtimeId());
+    console.log('HallId:', this.hallId());
+    console.log('Ticket price:', price);
+    console.log('Tickets:', count);
+    console.log('Total:', total);
+    console.log('Selected seatIds:', this.selectedSeatIds());
+
+    alert(`Pris: ${price} x ${count} = ${total}`);
+  }
+
   private tickHold(): void {
     const sec = this.secondsLeft();
     if (sec <= 0) return;
-
     const next = sec - 1;
     this.secondsLeft.set(next);
-
     if (next === 0) {
       this.selectedSeatIds.set([]);
       this.refreshStatus();
@@ -194,12 +241,10 @@ export class AllTickets implements OnInit {
 
   private refreshStatus(): void {
     const selected = new Set(this.selectedSeatIds());
-    this.seats.set(
-      this.seats().map((s) => ({
-        ...s,
-        status: selected.has(s.seatId) ? 'SelectedByYou' : 'Available',
-      }))
-    );
+    this.seats.set(this.seats().map(s => ({
+      ...s,
+      status: selected.has(s.seatId) ? 'SelectedByYou' : 'Available'
+    })));
   }
 
   rows(): { row: number; seats: SeatUI[] }[] {

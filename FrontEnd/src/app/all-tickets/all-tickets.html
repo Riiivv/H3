@@ -27,14 +27,28 @@
         Valgte: {{ selectedSeatIds().length }} / {{ ticketCount() }}
         <span *ngIf="secondsLeft() > 0"> · Reserveret: {{ secondsLeft() }}s</span>
       </div>
+
       <div *ngIf="error()" class="error">{{ error() }}</div>
       <div *ngIf="loading()">Loader sæder…</div>
+
+      <!-- BONUS: vis pris -->
+      <div *ngIf="ticketPrice() > 0">
+        Pris pr billet: {{ ticketPrice() }} · Total: {{ ticketPrice() * selectedSeatIds().length }}
+      </div>
     </div>
 
     <div class="actions">
       <button class="btn" type="button" (click)="toggleLegend()">i</button>
       <button class="btn" type="button" (click)="releaseHolds()">FRIGIV</button>
-      <button class="btn btn-primary" type="button">VIDERE</button>
+
+      <button
+        class="btn btn-primary"
+        type="button"
+        (click)="onNext()"
+        [disabled]="selectedSeatIds().length !== ticketCount() || ticketPrice() <= 0"
+      >
+        VIDERE
+      </button>
     </div>
   </div>
 

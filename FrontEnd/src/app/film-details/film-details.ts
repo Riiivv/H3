@@ -75,22 +75,24 @@ export class FilmDetails implements OnInit {
 goToTickets(s: any): void {
   console.log('CLICK SHOWTIME:', s);
 
-  const rawHall =
-    s?.hallId ??
-    s?.HallId ??
-    s?.hallID ??
-    s?.HallID;
+  const rawShowtime =
+    s?.showtimeId ??
+    s?.showTimeId ??
+    s?.id ??
+    s?.showtimeID ??
+    s?.ShowtimeId ??
+    s?.ShowTimeID;
 
-  const hallId = Number(rawHall);
+  const showtimeId = Number(rawShowtime);
 
-  console.log('FOUND HALL ID:', hallId);
+  console.log('FOUND SHOWTIME ID:', showtimeId);
 
-  if (!Number.isFinite(hallId) || hallId <= 0) {
-    alert('Kunne ikke finde hallId (tjek console).');
+  if (!Number.isFinite(showtimeId) || showtimeId <= 0) {
+    alert('Kunne ikke finde showtimeId (tjek console).');
     return;
   }
 
-  this.router.navigate(['/tickets', hallId]).then((ok) => {
+  this.router.navigate(['/tickets', showtimeId]).then((ok) => {
     console.log('Navigation success:', ok);
   });
 }

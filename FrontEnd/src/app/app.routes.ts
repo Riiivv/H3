@@ -19,7 +19,7 @@ export const routes: Routes = [
   { path: 'contact', component: Contact, title: 'Contact' },
   { path: 'about', component: About, title: 'About' },
   { path: 'people', component: AllPeople, title: 'People' },
-    { path: 'tickets/:showtimeId', component: AllTickets },
+  { path: 'tickets/:showtimeId', component: AllTickets },
 
   // ADMIN
   { path: 'admin', component: FilmAdministration, title: 'Admin' },
